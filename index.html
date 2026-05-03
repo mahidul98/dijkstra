@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dijkstra's Shortest Path Finder</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- Canvas Area -->
+  <div id="canvas-wrap">
+    <div id="header">
+      <h1>Dijkstra's Shortest Path</h1>
+      <div class="sub">Click to add nodes · Switch to Edge mode to connect · Set Start & End · Run</div>
+    </div>
+    <canvas id="cv"></canvas>
+    <div id="tooltip"></div>
+  </div>
+
+  <!-- Side Panel -->
+  <div id="panel">
+
+    <!-- Mode -->
+    <div class="section">
+      <div class="section-title">Mode</div>
+      <div class="mode-grid">
+        <button class="mode-btn active" id="m-node"  onclick="setMode('node')">＋ Node</button>
+        <button class="mode-btn"        id="m-edge"  onclick="setMode('edge')">⌇ Edge</button>
+        <button class="mode-btn"        id="m-start" onclick="setMode('start')">◎ Start</button>
+        <button class="mode-btn"        id="m-end"   onclick="setMode('end')">⊗ End</button>
+      </div>
+      <div id="edge-controls">
+        <select id="sel-a"><option value="">From node…</option></select>
+        <select id="sel-b"><option value="">To node…</option></select>
+        <input type="number" id="weight-in" placeholder="Weight (default 10)" min="1" max="999" value="10">
+        <button class="btn" onclick="addEdgeFromMenu()">＋ Add Edge</button>
+      </div>
+    </div>
+
+    <!-- Samples -->
+    <div class="section">
+      <div class="section-title">Sample Graphs</div>
+      <select id="sample-sel">
+        <option value="">Choose a sample…</option>
+        <option value="city">City Map (11 nodes)</option>
+        <option value="metro">Metro Lines (9 nodes)</option>
+        <option value="grid">Grid Network (12 nodes)</option>
+      </select>
+      <button class="btn primary" onclick="loadSample()">Load Sample</button>
+    </div>
+
+    <!-- Algorithm -->
+    <div class="section">
+      <div class="section-title">Algorithm</div>
+      <div class="speed-row">
+        <label>Speed</label>
+        <input type="range" id="speed-sl" min="1" max="10" value="5" step="1"
+               oninput="document.getElementById('speed-lbl').textContent = this.value">
+        <span id="speed-lbl">5</span>
+      </div>
+      <button class="btn primary" onclick="runDijkstra()">&#9654; Find Shortest Path</button>
+      <button class="btn"         onclick="resetPath()">&#8635; Reset Animation</button>
+      <button class="btn danger"  onclick="clearAll()">&#10005; Clear Everything</button>
+    </div>
+
+    <!-- Status -->
+    <div class="section">
+      <div class="section-title">Status</div>
+      <div id="status">Click canvas to add nodes.</div>
+      <div id="path-display"></div>
+      <div id="dist-stat">
+        <div class="stat-row">
+          <span class="label">Total Distance</span>
+          <span class="val" id="dist-val">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="section">
+      <div class="section-title">Legend</div>
+      <div class="legend">
+        <div class="legend-item"><div class="dot unvisited"></div>Unvisited node</div>
+        <div class="legend-item"><div class="dot start-dot"></div>Start node</div>
+        <div class="legend-item"><div class="dot end-dot"></div>End node</div>
+        <div class="legend-item"><div class="dot current-dot"></div>Currently visiting</div>
+        <div class="legend-item"><div class="dot visited-dot"></div>Visited (explored)</div>
+        <div class="legend-item"><div class="dot path-dot"></div>Final shortest path</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
